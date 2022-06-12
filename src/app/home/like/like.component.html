@@ -1,0 +1,8 @@
+<ng-container *ngIf="liked">
+    <i class="pi pi-heart-fill" id="icon-heart" style="color: #ED4956;"
+        (click)="likePost(post)"></i>
+</ng-container>
+<ng-container *ngIf="!liked">
+    <i class="pi pi-heart" id="icon-heart"
+        (click)="likePost(post)" ></i>
+</ng-container>

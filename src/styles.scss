@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
+// @import "../node_modules/primeng/resources/themes/vela-blue/theme.css"; per dark mode
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var( --surface-ground);
+  // background-color: rgb(223, 235, 239);
+}
+
+a{
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+
+

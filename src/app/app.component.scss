@@ -1,0 +1,21 @@
+
+
+.container {
+  padding: 1rem;
+}
+
+div {
+    // border: 1px solid red;
+  ng-template {
+    display: block;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  .center {
+    margin: auto;
+    max-width: fit-content;
+  }
+  .mat-icon {
+    font-size: 1.8rem;
+  }
+}

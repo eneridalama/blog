@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center header">
+    <img src="/assets/images/profile-pic.png" alt="" class="profile-pic">
+    <span>
+        {{user.firstName}} {{user.lastName}}
+    </span>
+</div>
+<div>
+    <textarea width="400px" [value]="post.description" #contentRef></textarea>
+</div>
+<div>
+    <input pInputText placeholder="Put your image url" style="width: 100%;" #imageRef>
+
+    <div class="d-flex justify-content-between" style="margin-top: 20px;">
+        <p>Turn off commenting</p>
+        <p-inputSwitch (onChange)="handleChange($event)" [(ngModel)]="isOff"></p-inputSwitch>
+    </div>
+
+    <button pButton type="button" label="Save Post" (click)="savePost()"></button>
+</div>

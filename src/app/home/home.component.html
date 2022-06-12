@@ -1,0 +1,59 @@
+<div class="d-flex ">
+    <div class="col profile">
+        <app-profile-side-panel></app-profile-side-panel>
+    </div>
+    <div class="col-md-7 d-flex justify-content-between">
+        <div class="wrapper">
+            <app-create-post (post)="createPost($event)"></app-create-post>
+
+            <p-card *ngFor="let post of posts">
+                <ng-template pTemplate="header" style="margin: 0;">
+                    <div class="d-flex justify-content-between align-items-center header">
+                        <div class="d-flex align-items-center ">
+                            <img src="/assets/images/profile-pic.png" alt="" class="profile-pic">
+                            <div class="title">
+                                <span>
+                                    {{post.user.firstName}} {{post.user.lastName}}
+                                </span> <br>
+                            </div>
+                        </div>
+                        <div *ngIf="post.user.id == currentUser.id">
+                            <button pButton pRipple type="button" icon="pi pi-ellipsis-h"
+                                class="p-button-rounded p-button-text post-menu"
+                                (click)="selectedPost = post; menu.toggle($event)"></button>
+                            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+                            <p-dialog header="Edit post" [(visible)]="display" [modal]="true">
+                                <app-edit-post [post]="selectedPost" (display)="showModal($event)"></app-edit-post>
+                            </p-dialog>
+                            
+                        </div>
+                    </div>
+                    <img src={{post.imageUrl}} alt="" class="postedPic">
+                </ng-template>
+                <div style="margin: 0;">
+                    <app-like [post]="post"></app-like>
+                    <i class="pi pi-comment" style="margin-left: 15px"></i>
+                </div>
+                <p> likes</p>
+
+                <div id="posted-content d-flex">
+                    <p>
+                        <b> {{post.user.firstName}} {{post.user.lastName}}</b>
+                        {{post.description}}
+                    </p>
+                </div>
+                <div *ngIf="post.noComment == false; else disabledMessage">
+                    <app-comment-section [post]="post"></app-comment-section>
+                </div>
+                <ng-template #disabledMessage>Comments are off.</ng-template>
+            </p-card>
+            <button pButton label="Show more posts" style="margin: 30px"></button>
+        </div>
+        <app-menu></app-menu>
+    </div>
+    <!-- <div class="col-md-5">
+        <app-profile-side-panel></app-profile-side-panel>
+    </div> -->
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [appendTo]="'body'" ></p-confirmDialog>
+                            <p-toast key="deleteToast" position="top-left"></p-toast>

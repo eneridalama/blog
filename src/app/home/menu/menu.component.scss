@@ -1,0 +1,24 @@
+div {
+  // border: 1px solid red;
+  .nav-end {
+    width: 330px;
+  }
+
+  i {
+    font-size: 1.5rem;
+    transition: 0.5s;
+    &:hover {
+      font-size: 1.7rem;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  #logo-img {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 5px 0 white;
+  }
+}
+
+.navbar{
+  margin: 18px;
+}

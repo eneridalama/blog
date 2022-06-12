@@ -1,0 +1,36 @@
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 400px;
+    height: 150px;
+    margin: 20px;
+    border: none;
+    background-color: var(--surface-ground);
+    &:focus{
+        border: none;
+        outline: 0;
+        background-color: var(--surface-ground);
+    }
+  }
+
+.header{
+    margin: 15px;
+}
+
+.example-chip-list {
+    width: 80%;
+  }
+
+  .create-post{
+    width: 100%;
+    text-align: left;
+}
+
+button{
+    float: right;
+}
