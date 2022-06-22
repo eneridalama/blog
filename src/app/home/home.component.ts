@@ -5,6 +5,7 @@ import { UserModel } from '../core/model/user.model';
 import { ResponseModel } from '../core/model/auth.model';
 import { ConfirmationService, MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { tap } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit {
     private postService: PostService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translateService: TranslateService
   ) {
     this.selectedPost = {
       id: 1,
@@ -53,10 +55,10 @@ export class HomeComponent implements OnInit {
 
     this.items = [
       {
-        label: 'Options',
+        label: this.translateService.instant('options'),
         items: [
           {
-            label: 'Edit',
+            label: this.translateService.instant('edit'),
             icon: 'pi pi-pencil',
             command: () => {
               if (this.selectedPost) {
@@ -65,7 +67,7 @@ export class HomeComponent implements OnInit {
             },
           },
           {
-            label: 'Delete',
+            label: this.translateService.instant('delete'),
             icon: 'pi pi-trash',
             command: () => {
               this.confirm();
@@ -82,7 +84,8 @@ export class HomeComponent implements OnInit {
   }
   confirm() {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete this post?',
+
+        message: this.translateService.instant('deletePostMessage'),
         accept: () => {
           this.deletePost(this.selectedPost);
           this.deleteMessage();
@@ -100,12 +103,8 @@ export class HomeComponent implements OnInit {
   }
 
   createPost(event: PostEntity<UserModel>) {
-    console.log('eventi ', event);
+    console.log('eventi postit ', event);
     this.posts.unshift(event);
-  }
-
-  reloadCurrentPage() {
-    window.location.reload();
   }
 
   share(id: number) {
@@ -121,11 +120,10 @@ export class HomeComponent implements OnInit {
     this.posts =  this.posts.filter(item => item.id != post.id)
     this.display = false;
     });
-    // this.reloadCurrentPage();
   }
 
-  onScrollDown() {  
-    console.log('scrolled!!')
+  onScroll() {  
+    console.log('scrolled!')
     
   }  
 

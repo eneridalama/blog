@@ -1,8 +1,7 @@
 <div class="container d-flex align-items-center justify-content-center">
-    <p-card header="Your account">
+    <p-card header="{{'youraccount' | translate}}">
         <h1>{{user.firstName}} {{user.lastName}}</h1>
         <p> <b> ID</b> {{user.id}} |  {{user.email}}</p>
-        <p> </p>
-        <p> Imagination is more important than knowledge – Albert Einstein</p>
+        <p> {{'quote' | translate}}</p>
     </p-card>
 </div>

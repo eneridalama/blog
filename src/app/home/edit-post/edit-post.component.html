@@ -8,12 +8,12 @@
     <textarea width="400px" [value]="post.description" #contentRef></textarea>
 </div>
 <div>
-    <input pInputText placeholder="Put your image url" style="width: 100%;" #imageRef>
+    <input pInputText placeholder="Put your image url" style="width: 100%;" [value]="post.imageUrl" #imageRef>
 
     <div class="d-flex justify-content-between" style="margin-top: 20px;">
-        <p>Turn off commenting</p>
-        <p-inputSwitch (onChange)="handleChange($event)" [(ngModel)]="isOff"></p-inputSwitch>
+        <p>{{'turnOffCommenting' | translate}}</p>
+        <p-inputSwitch (onChange)="handleChange($event)" [(ngModel)]="post.noComment"></p-inputSwitch>
     </div>
 
-    <button pButton type="button" label="Save Post" (click)="savePost()"></button>
+    <button pButton type="button" label="{{'post' | translate}}" (click)="savePost()"></button>
 </div>

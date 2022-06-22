@@ -4,8 +4,6 @@ import { ResponseModel } from '../model/auth.model';
 import { CreatePost, PageOf, PostEntity } from '../model/post.model';
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../model/user.model';
-import { CommentEntity, OmitType } from '../model/comment.model';
-import { VoteEntity } from '../model/vote.model';
 import { tap } from 'rxjs';
 import { SortPostsPipe } from 'src/app/shared/pipes/sort-posts.pipe';
 
@@ -15,13 +13,21 @@ import { SortPostsPipe } from 'src/app/shared/pipes/sort-posts.pipe';
 export class PostService {
   private url: string;
 
-  constructor(private httpClient: HttpClient,private sortPostsPipe:SortPostsPipe) {
+  constructor(
+    private httpClient: HttpClient,
+    private sortPostsPipe: SortPostsPipe
+  ) {
     this.url = environment.baseUrl + '/post';
   }
 
   getPost() {
-    return this.httpClient.get<ResponseModel<PageOf<PostEntity<UserModel>[]>>>(this.url).pipe(tap(resp =>{
-       this.sortPostsPipe.transform(resp.data.list)}));
+    return this.httpClient
+      .get<ResponseModel<PageOf<PostEntity<UserModel>[]>>>(this.url)
+      .pipe(
+        tap((resp) => {
+          this.sortPostsPipe.transform(resp.data.list);
+        })
+      );
   }
 
   getPostId(id: number) {

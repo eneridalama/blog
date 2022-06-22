@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SocialApp": {
+    "primeng-dynamic-theming": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/social-app",
+            "outputPath": "dist/primeng-dynamic-theming",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -34,7 +34,17 @@
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/primeng.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/vela-blue.scss",
+                "bundleName": "vela-blue",
+                "inject": false
+              },
+              {
+                "input": "src/lara-light-blue.scss",
+                "bundleName": "lara-light-blue",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -75,10 +85,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "SocialApp:build:production"
+              "browserTarget": "primeng-dynamic-theming:build:production"
             },
             "development": {
-              "browserTarget": "SocialApp:build:development"
+              "browserTarget": "primeng-dynamic-theming:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +96,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "SocialApp:build"
+            "browserTarget": "primeng-dynamic-theming:build"
           }
         },
         "test": {
@@ -102,7 +112,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -111,5 +120,6 @@
       }
     }
   },
+
   "defaultProject": "SocialApp"
 }

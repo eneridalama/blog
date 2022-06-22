@@ -1,11 +1,8 @@
-<div class="d-flex ">
-    <div class="col profile">
-        <app-profile-side-panel></app-profile-side-panel>
-    </div>
-    <div class="col-md-7 d-flex justify-content-between">
-        <div class="wrapper">
-            <app-create-post (post)="createPost($event)"></app-create-post>
-
+<!-- <app-menu></app-menu> -->
+<div class="d-flex container justify-content-center">
+    <div class="col-md-4 d-flex justify-content-between">
+        <div class="wrapper" class="search-results">
+            <app-create-post (post)="createPost($event)" ></app-create-post>
             <p-card *ngFor="let post of posts">
                 <ng-template pTemplate="header" style="margin: 0;">
                     <div class="d-flex justify-content-between align-items-center header">
@@ -34,7 +31,7 @@
                     <app-like [post]="post"></app-like>
                     <i class="pi pi-comment" style="margin-left: 15px"></i>
                 </div>
-                <p> likes</p>
+                <p>254 {{'likes' | translate}}</p>
 
                 <div id="posted-content d-flex">
                     <p>
@@ -42,18 +39,19 @@
                         {{post.description}}
                     </p>
                 </div>
-                <div *ngIf="post.noComment == false; else disabledMessage">
+                <div *ngIf="!post.noComment; else disabledMessage">
                     <app-comment-section [post]="post"></app-comment-section>
                 </div>
                 <ng-template #disabledMessage>Comments are off.</ng-template>
             </p-card>
-            <button pButton label="Show more posts" style="margin: 30px"></button>
         </div>
-        <app-menu></app-menu>
     </div>
     <!-- <div class="col-md-5">
         <app-profile-side-panel></app-profile-side-panel>
     </div> -->
+    <div class="col-md-4 profile">
+        <app-profile-side-panel></app-profile-side-panel>
+    </div>
 </div>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [appendTo]="'body'" ></p-confirmDialog>
-                            <p-toast key="deleteToast" position="top-left"></p-toast>
+                            <p-toast key="deleteToast" position="top-right"></p-toast>

@@ -17,7 +17,10 @@ export class CommentService {
   }
 
   addComment(request: PostEntity<UserModel>, comment: OmitType) {
-    return this.httpClient.post<ResponseModel<OmitType>>(this.url + `/${request.id}` + '/comment', comment);
+    return this.httpClient.post<ResponseModel<CommentEntity>>(
+      this.url + `/${request.id}` + '/comment',
+      comment
+    );
   }
 
   deleteComment(postId: number, commentId: number) {

@@ -1,75 +1,54 @@
-import {
-  GoogleLoginProvider,
-  SocialAuthService,
-} from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { UserModel } from 'src/app/core/model/user.model';
+import { tap } from 'rxjs';
+import { passwordRegex } from './../../core/common/constants';
+import { UserRole } from './../../core/common/enums';
 import { AuthService } from '../auth.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  providers: [MessageService],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
-  
+
   constructor(
     private authService: AuthService,
-    private socialAuthService: SocialAuthService,
     private router: Router,
     private messageService: MessageService
-    ) {
-      this.loginForm = new FormGroup({
-        email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(
-              '^(?=.*d)(?=.*[a-zA-Z]).{8,16}$'
-            )
+  ) {
+    this.loginForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(passwordRegex),
       ]),
     });
   }
 
   ngOnInit(): void {}
-  
-  logIn() {
-    console.log(this.loginForm.value);
 
+  logIn() {
     this.isLoading = true;
     this.authService
       .signIn({
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
-      })
-      .subscribe(
-        (res) => {
-          console.log(res);
+      }).pipe(tap(res => {
+        if (res && res.data && res.data.role == UserRole.USER) {
           this.router.navigate(['/home']);
-          this.isLoading = false;
-          type user = Omit<UserModel, "token">
-          localStorage.setItem('user', JSON.stringify(res.data as user));
-        },
-        (error) => {
-          this.isLoading = false;
-          this.showError("The credentials you have entered are incorrect.");
+        } else {
+          this.router.navigate(['/dashboard']);
         }
-      );
-    this.loginForm.reset();
-  }
-
-  async signInWithGoogle() {
-    console.log('google sign in is active');
-    try {
-      await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    } catch (e) {
-      console.log(e);
-    }
+        this.isLoading = false;
+        localStorage.setItem('user', JSON.stringify(res.data));
+      },(error) => {
+        this.isLoading = false;
+        this.showError('The credentials you have entered are incorrect.');
+      })).subscribe();
   }
 
   showError(errorMsg: string) {

@@ -1,0 +1,13 @@
+<div class="navbar d-flex justify-content-around align-items-center">
+  <div class="logo" routerLink="/home">
+    <p style="cursor: pointer;">Instagram</p>
+    <!-- <img src="/assets/images/Instagram_logo.png" id="logo-img" alt=""> -->
+  </div>
+  <div class="d-flex align-items-center">
+    <p-menubar [model]="items"></p-menubar> 
+
+    <p-selectButton [options]="lang" [(ngModel)]="selected" optionLabel="value" optionValue="name" (onChange)="selectLanguage($event)"></p-selectButton>
+     
+  </div>
+
+</div>

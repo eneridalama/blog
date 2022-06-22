@@ -1,6 +1,8 @@
 <div class="comment-section">
-    <p *ngIf="post.comments.length" (click)="viewComments()" style="cursor: pointer; color: rgba(0, 0, 0, 0.4)">{{message}} all {{commentNumber}}
-        comments</p>
+    <ng-container *ngIf="!view"></ng-container>
+    <p *ngIf="post.comments.length" (click)="viewComments()" style="cursor: pointer; color: rgba(0, 0, 0, 0.4)">
+        {{message}}
+        {{commentMessage}} </p>
     <ng-container *ngIf="view">
         <ng-container *ngFor="let comment of post.comments">
             <div class="d-flex justify-content-between align-items-center comment">
@@ -11,13 +13,15 @@
                 <div *ngIf="comment.user.id == currentUser.id">
                     <button pButton pRipple type="button" icon="pi pi-times"
                         class="p-button-rounded p-button-danger p-button-text"
-                        (click)="selectedComment = comment;deleteComment(selectedComment)"></button>
+                        (click)="selectedComment = comment;confirm(selectedComment)"></button>
                 </div>
             </div>
         </ng-container>
     </ng-container>
     <div class="p-inputgroup">
-        <input type="text" pInputText placeholder="Write your comment" #commentRef>
-        <button pButton label="Post" class="p-button-outlined" (click)="postComment()"></button>
+        <input type="text" pInputText placeholder="{{'writeComment' | translate}}" #commentRef>
+        <button pButton label="{{'post' | translate}}" class="p-button-outlined" (click)="postComment()"></button>
     </div>
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [appendTo]="'body'"></p-confirmDialog>
+<p-toast key="deleteToast" position="top-right"></p-toast>

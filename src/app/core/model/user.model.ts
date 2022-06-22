@@ -6,7 +6,3 @@ export interface UserModel {
   token: string;
   role: string;
 }
-
-
-   
-

@@ -27,8 +27,6 @@ export class AuthService {
       .pipe(
         tap((res) => {
           localStorage.setItem('token', res.data.token);
-          // this.user.next(res.data);
-          // console.log('user ', this.user);
         })
       );
   }
@@ -39,15 +37,11 @@ export class AuthService {
       .pipe(tap((res) => localStorage.setItem('token', res.data.token)));
   }
 
-  // googleSignIn(idToken: string): Observable<ResponseModel<UserModel>> {
-  //   return this.httpClient
-  //     .post<ResponseModel<UserModel>>(this.url + '/google/signIn', idToken)
-  //     .pipe(tap((res) => localStorage.setItem('token', res.data.token)));
-  // }
+  loggedIn(): boolean{
+    return !!localStorage.getItem('user');
+  }
 
-  // googleSignUp(idToken: string) {
-  //   return this.httpClient
-  //     .post<ResponseModel<UserModel>>(this.url + '/google/signUp', idToken)
-  //     .pipe(tap((res) => localStorage.setItem('token', res.data.token)));
-  // }
+  isAdmin(){
+    return JSON.parse(localStorage.getItem('user')!).role == '9';
+  }
 }

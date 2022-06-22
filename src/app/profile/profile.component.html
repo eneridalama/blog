@@ -1,0 +1,30 @@
+<!-- <app-menu></app-menu> -->
+<div class="container">
+    <div class="d-flex align-items-center justify-content-center">
+
+        <div>
+            <img src="/assets/images/profile-pic.png" alt="" class="pic">
+        </div>
+        <div>
+            <h1>{{user.firstName}} {{user.lastName}}</h1>
+            <p> {{user.email}} </p>
+            <p> {{'quote' | translate}}</p>
+        </div>
+    </div>
+    <p-divider></p-divider>
+
+    <div class="d-flex justify-content-center">
+        <ul class="grid">
+            <div *ngFor="let post of posts" class="post">
+                <ng-container>
+                    <img src={{post.imageUrl}} alt="" class="postedPic" (click)="displayDialog(post)">
+                </ng-container>
+            </div>
+        </ul>
+    </div>
+
+</div>
+
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '60vw'}">
+    <app-profile-post [post]="selectedPost"></app-profile-post>
+</p-dialog>

@@ -8,6 +8,7 @@ import {
   Input,
   SimpleChanges,
 } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { PostEntity } from 'src/app/core/model/post.model';
 import { UserModel } from 'src/app/core/model/user.model';
 import { PostService } from 'src/app/core/services/post.service';
@@ -24,7 +25,7 @@ export class CreatePostComponent implements OnInit {
   isOff: boolean = false;
   image: string = '';
   content: string = '';
-  @Input() currentUser: UserModel;
+  currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   @Output() post: EventEmitter<PostEntity<UserModel>> = new EventEmitter<
     PostEntity<UserModel>
   >();
@@ -33,14 +34,7 @@ export class CreatePostComponent implements OnInit {
   @ViewChild('imageRef') imageControl!: ElementRef<HTMLInputElement>;
 
   constructor(private postService: PostService) {
-    this.currentUser = {
-      id: 1,
-      firstName: '',
-      lastName: '',
-      email: '',
-      token: '',
-      role: '',
-    };
+    
   }
 
   ngOnInit(): void {
@@ -51,31 +45,27 @@ export class CreatePostComponent implements OnInit {
     console.log(changes);
   }
 
-  createPost() {
-    const content = this.contentControl.nativeElement.value;
-    const image = this.imageControl.nativeElement.value;
-
-    this.contentControl.nativeElement.value = '';
-    this.imageControl.nativeElement.value = '';
-
-    if (content && image) {
+  createPost(createPostForm: NgForm) {
+  
+    if (createPostForm.value.image && createPostForm.value.content) {
       this.postService
         .savePost({
-          imageUrl: image,
-          description: content,
+          imageUrl: createPostForm.value.image,
+          description: createPostForm.value.content,
           noComment: this.isOff,
         })
         .subscribe((res) => console.log(res));
       this.post.emit({
         id: 0,
-        imageUrl: image,
-        description: content,
+        imageUrl: createPostForm.value.image,
+        description: createPostForm.value.content,
         noComment: this.isOff,
         comments: [],
         user: this.currentUser,
         votes: [],
       });
     }
+    createPostForm.reset();
     this.display = false;
   }
 

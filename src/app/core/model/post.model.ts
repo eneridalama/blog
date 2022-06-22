@@ -1,5 +1,5 @@
-import { CommentEntity } from "./comment.model";
-import { VoteEntity } from "./vote.model";
+import { CommentEntity } from './comment.model';
+import { VoteEntity } from './vote.model';
 
 export interface CreatePost {
   imageUrl: string;
@@ -24,12 +24,6 @@ export interface PostEntity<MODEL> {
   votes: VoteEntity[];
 }
 
-export interface OnEdit{
+export interface OnEdit {
   isDirty: boolean;
 }
-
-
-
-
-
-

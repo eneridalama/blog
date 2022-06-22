@@ -2,27 +2,30 @@
     <div class="d-flex align-items-center">
         <img src="/assets/images/profile-pic.png" alt="" class="profile-pic">
         <button pButton type="button" class="p-button-outlined p-button-rounded create-post"
-            (click)="showDialog()">What's on your mind, {{user.firstName}}?</button>
+            (click)="showDialog()">{{'whatsonyourmind' | translate}} {{user.firstName}}?</button>
     </div>
 </p-card>
 
-<p-dialog header="Create a post" [(visible)]="display" [modal]="true">
+<p-dialog header="{{'createAPost' | translate}}" [(visible)]="display" [modal]="true">
     <div class="d-flex align-items-center header">
         <img src="/assets/images/profile-pic.png" alt="" class="profile-pic">
         <span>
             {{user.firstName}} {{user.lastName}}
         </span>
     </div>
-    <div >
-        <textarea placeholder="Ex. It makes me feel..." width="400px" #contentRef name="content" ></textarea> <br>
-        <input pInputText placeholder="Put your image url" style="width: 100%;" #imageRef  >
+    <form #createPostForm="ngForm" (ngSubmit)="createPost(createPostForm)">
+        <textarea placeholder="{{'ex' | translate}}" width="400px" #contentRef ngModel name="content" minlength="3"
+            required></textarea> <br>
+        <input pInputText placeholder="{{'putImageUrl' | translate}}" style="width: 100%;" #imageRef ngModel
+            name="image" required>
 
         <div class="d-flex justify-content-between" style="margin-top: 20px;">
-            <p>Turn off commenting</p>
-            <p-inputSwitch (onChange)="handleChange($event)" [(ngModel)]="isOff"></p-inputSwitch>
+            <p>{{'turnOffCommenting' | translate}}</p>
+            <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
         </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <button pButton type="button" label="Post" class="" (click)="createPost()"></button>
-    </ng-template>
+        <div class="d-flex justify-content-end">
+            <button pButton type="submit" label="{{'post' | translate}}" [disabled]="createPostForm.invalid"></button>
+        </div>
+    </form>
+
 </p-dialog>

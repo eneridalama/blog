@@ -1,6 +1,12 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
-@import "../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
-// @import "../node_modules/primeng/resources/themes/vela-blue/theme.css"; per dark mode
+// @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+// @import "primeng/resources/primeng.min.css";
+// @import "primeflex/primeflex.css";
+// @import "primeicons/primeicons.css";
+
+// @import "../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
+// @import "../node_modules/primeng/resources/themes/vela-blue/theme.css"; //per dark mode
+
 html,
 body {
   height: 100%;
@@ -16,6 +22,12 @@ a{
   text-decoration: none;
   color: var(--primary-color);
 }
+
+p{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
 
 
 

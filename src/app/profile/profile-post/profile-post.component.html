@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="wrapper">
+        <img src={{post.imageUrl}} alt="">
+        <div>
+            <div class="d-flex justify-content-between align-items-center header">
+                <div class="d-flex align-items-center ">
+                    <img src="/assets/images/profile-pic.png" alt="" class="profile-pic" width="35px">
+                    <div class="title">
+                        <span>
+                          <b> {{post.user.firstName}} {{post.user.lastName}}</b> 
+                        </span> <br>
+                    </div>
+                </div>
+                <div *ngIf="post.user.id == currentUser.id">
+                    <button pButton pRipple type="button" icon="pi pi-ellipsis-h"
+                        class="p-button-rounded p-button-text post-menu"
+                        (click)="menu.toggle($event)"></button>
+                    <p-menu #menu [popup]="true" [model]="items" [appendTo]="'body'"></p-menu>
+                    <p-dialog header="Edit post" [(visible)]="display" [modal]="true" [appendTo]="'body'">
+                        <app-edit-post [post]="post" (display)="showModal($event)"></app-edit-post>
+                    </p-dialog>
+                 
+                    
+                </div>
+            </div>
+            <p-divider></p-divider>
+            <div>
+                <div class="d-flex justify-content-between align-items-center header">
+                    <div class="d-flex align-items-center ">
+                        <img src="/assets/images/profile-pic.png" alt="" class="profile-pic" width="35px">
+                        <div class="title">
+                            <span>
+                              <b>  {{post.user.firstName}} {{post.user.lastName}} </b>{{post.description}}
+                            </span> <br>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="comments" id="container" class="foo">
+            <div *ngIf="post.noComment == false; else disabledMessage">
+                <app-comment-section [post]="post"></app-comment-section>
+            </div>
+            <ng-template #disabledMessage>Comments are off.</ng-template></div>
+        </div>
+    </div>
+
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [appendTo]="'body'" ></p-confirmDialog>
+                            <p-toast key="deleteToast" position="top-right"></p-toast>
+                            

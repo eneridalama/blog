@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ResponseModel } from '../model/auth.model';
-import { CreatePost, PageOf, PostEntity } from '../model/post.model';
+import { PageOf } from '../model/post.model';
 import { environment } from 'src/environments/environment';
-import { UserModel } from '../model/user.model';
-import { CommentEntity, OmitType } from '../model/comment.model';
 import { VoteEntity } from '../model/vote.model';
 
 @Injectable({
@@ -16,7 +14,6 @@ export class VoteService {
   constructor(private httpClient: HttpClient) {
     this.url = environment.baseUrl + '/post';
   }
-
 
   getVote(id: number) {
     let queryParams = new HttpParams();

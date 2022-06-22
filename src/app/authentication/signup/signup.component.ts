@@ -48,7 +48,6 @@ export class SignupComponent implements OnInit {
           console.log(res);
           this.isLoading = false;
           this.router.navigate(['/home']);
-          type user = Omit<UserModel, "token">
           localStorage.setItem('user', JSON.stringify(res.data));
         },
         (error) => {
