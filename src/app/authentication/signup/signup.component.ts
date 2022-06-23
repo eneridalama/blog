@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { UserModel } from 'src/app/core/model/user.model';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -44,13 +43,11 @@ export class SignupComponent implements OnInit {
       })
       .subscribe(
         (res) => {
-          console.log(res);
           this.isLoading = false;
           this.router.navigate(['/home']);
           localStorage.setItem('user', JSON.stringify(res.data));
         },
         (error) => {
-          console.log(error.error)
           this.isLoading = false;
           switch(error.error.errno){
               case 1062:

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {
   ConfirmationService,
   MenuItem,
@@ -6,7 +7,7 @@ import {
   PrimeNGConfig,
 } from 'primeng/api';
 import { ResponseModel } from 'src/app/core/model/auth.model';
-import { PageOf, PostEntity } from 'src/app/core/model/post.model';
+import { PageOf, PostClass, PostEntity } from 'src/app/core/model/post.model';
 import { UserModel } from 'src/app/core/model/user.model';
 import { PostService } from 'src/app/core/services/post.service';
 
@@ -19,22 +20,7 @@ export class ProfilePostComponent implements OnInit {
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   posts: PostEntity<UserModel>[] = []
   openEdit: boolean = false;
-  @Input() post: PostEntity<UserModel> = {
-    id: 0,
-    imageUrl: '',
-    description: '',
-    noComment: false,
-    comments: [],
-    user: {
-      id: 1,
-      firstName: '',
-      lastName: '',
-      email: '',
-      token: '',
-      role: '',
-    },
-    votes: [],
-  };
+  @Input() post: PostEntity<UserModel> = new PostClass;
 
   items: MenuItem[] = [];
   display: boolean = false;
@@ -43,19 +29,24 @@ export class ProfilePostComponent implements OnInit {
     private postService: PostService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.getPosts();
     this.primengConfig.ripple = true;
 
+    this.initializeMenuItems();
+  }
+
+  initializeMenuItems(){
     this.items = [
       {
-        label: 'Options',
+        label: this.translateService.instant('options'),
         items: [
           {
-            label: 'Edit',
+            label: this.translateService.instant('edit'),
             icon: 'pi pi-pencil',
             command: () => {
               if (this.post) {
@@ -65,7 +56,7 @@ export class ProfilePostComponent implements OnInit {
             },
           },
           {
-            label: 'Delete',
+            label: this.translateService.instant('delete'),
             icon: 'pi pi-trash',
             command: () => {
               this.confirm();
@@ -86,29 +77,48 @@ export class ProfilePostComponent implements OnInit {
       });
   }
 
+  editPost(event: PostEntity<UserModel>) {
+    console.log(event);
+    if (this.openEdit) {
+      const index = this.posts.indexOf(this.post);
+      this.posts.map((item, indx) => {
+        console.log(index);
+        if (index === indx) {
+          this.posts[index] = event;
+        }
+      });
+      this.post.description = event.description;
+      this.post.imageUrl = event.imageUrl;
+      this.postService.editPost(this.post);
+      this.openEdit = false;
+    }
+  }
+
   confirm() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this post?',
+      message: this.translateService.instant('deletePostMessage'),
       accept: () => {
         this.deletePost(this.post);
         this.deleteMessage();
       },
+      key: "profilePost"
     });
+    this.display = false;
   }
 
   deletePost(post: PostEntity<UserModel>) {
     this.postService.deletePost(post.id).subscribe((item) => {
       this.posts = this.posts.filter((item) => item.id != post.id);
-      this.display = false;
     });
+    this.display = false;
   }
 
   deleteMessage() {
     this.messageService.add({
       key: 'deleteToast',
       severity: 'success',
-      summary: 'Deleted',
-      detail: 'Your post was deleted',
+      summary: this.translateService.instant('deleted'),
+      detail: this.translateService.instant('deletedDetail'),
     });
   }
 

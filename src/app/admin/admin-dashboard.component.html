@@ -4,7 +4,7 @@
 <div class="container" *ngIf="!isLoading">
     <p-card>
         <div class="log-out">
-            <p>{{"adminMessage" | translate}}</p>
+            <p>{{"hello" | translate}} {{currentUser.firstName}}, {{"adminMessage" | translate}}</p>
             <p-selectButton [options]="lang" [(ngModel)]="selected" optionLabel="value" optionValue="name"
                 (onChange)="selectLanguage($event)"></p-selectButton>
             <button pButton class="p-button-outlined p-button-primary" label="{{'logout' | translate}}"

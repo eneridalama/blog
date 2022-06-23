@@ -51,9 +51,9 @@
     </div>
 </div>
 <p-menu #menu [popup]="true" [model]="items"></p-menu>
-<p-confirmDialog header="Confirmation" key="myDialog" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog header="{{'confirmation' | translate}}" key="homeKey" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-toast key="deleteToast" position="top-right"></p-toast>
 <p-dialog header="{{openEdit ? 'Edit Service' : 'Add Service'}}"  [(visible)]="openModal" *ngIf="openModal" [modal]="true">
-    <app-create-edit-post (addedPost)="createPost($event)" (openModal)="showModal($event)" [object]="selectedPost">
+    <app-create-edit-post (addedPost)="handlePost($event)" (openModal)="showModal($event)" [object]="selectedPost">
     </app-create-edit-post>
 </p-dialog>

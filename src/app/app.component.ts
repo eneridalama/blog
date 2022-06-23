@@ -11,15 +11,10 @@ import { UserModel } from './core/model/user.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'SocialApp';
-  value = 'Clear me';
+  title = 'Blog';
 
-  constructor(public authService: AuthService,
-    private translateService:TranslateService){}
-
+  constructor(public authService: AuthService){}
 
   ngOnInit() {
-
-
   }    
 }

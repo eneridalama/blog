@@ -6,7 +6,6 @@ import {
   MessageService,
   PrimeNGConfig,
 } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { AuthService } from '../authentication/auth.service';
 import { ResponseModel } from '../core/model/auth.model';
 import { PageOf, PostEntity } from '../core/model/post.model';
@@ -26,7 +25,7 @@ interface Language {
 export class AdminDashboardComponent implements OnInit {
   isLoading: boolean = false;
   posts: PostEntity<UserModel>[] = [];
-  // currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
+  currentUser: UserModel = this.authService.loggedUser();
   lang: Language[] = [{ name: '', value: '' }];
   selected: string = 'en';
 
@@ -54,7 +53,6 @@ export class AdminDashboardComponent implements OnInit {
       .getPost()
       .subscribe((res: ResponseModel<PageOf<PostEntity<UserModel>[]>>) => {
         this.posts = res.data && res.data.list;
-        console.log('res1 ', res.data);
       });
   }
 
@@ -66,7 +64,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   selectLanguage(event: any) {
-    console.log(event);
     this.translateService.use(event.value);
   }
 

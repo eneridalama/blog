@@ -31,11 +31,9 @@
                                 <small style="color: red;" *ngIf="loginForm.controls['password'].invalid 
                                 && (loginForm.controls['password'].dirty 
                                 || loginForm.controls['password'].touched)" class="alert">
-                                    Please enter a valid password. Password must have
-                                    at least one upper case and one lower case letter,
-                                    one digit,
-                                    one special character (#?!@$%^&*-) and
-                                    minimum of 8 characters.
+                                Please enter a valid password. Password must have
+                                only letters and numbers and
+                                minimum of 8 characters.
                                 </small>
                             </div>
                         </div>

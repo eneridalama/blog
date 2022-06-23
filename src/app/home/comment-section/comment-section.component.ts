@@ -15,8 +15,6 @@ export class CommentSectionComponent implements OnInit {
   comments: CommentEntity[] = [];
   commentNumber: number = 0;
   view: boolean = false;
-  message: string = 'View';
-  commentMessage: string = 'comments';
   selectedComment: CommentEntity;
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
 
@@ -46,7 +44,6 @@ export class CommentSectionComponent implements OnInit {
   postComment() {
     const comment = this.commentControl.nativeElement.value;
     this.commentService.addComment(this.post, { comment }).subscribe((res) => {
-      console.log('res ', res.data);
       this.post.comments.push(res.data);
     });
     this.commentControl.nativeElement.value = '';
@@ -54,7 +51,6 @@ export class CommentSectionComponent implements OnInit {
 
   viewComments() {
     this.view = !this.view;
-    
   }
 
   deleteComment(comment: CommentEntity) {
@@ -65,14 +61,15 @@ export class CommentSectionComponent implements OnInit {
         const index = this.post.comments.indexOf(comment);
         this.post.comments.splice(index, 1);
       });
+    this.deleteMessage();
   }
 
   confirm(comment: CommentEntity) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this comment?',
+      key: 'commentKey',
+      message: this.translateService.instant('deleteCommentMessage'),
       accept: () => {
         this.deleteComment(comment);
-        this.deleteMessage();
       },
     });
   }

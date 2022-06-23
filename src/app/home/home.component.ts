@@ -31,13 +31,15 @@ export class HomeComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private translateService: TranslateService
-  ) {
-    // this.selectedPost = new PostClass();
-  }
+  ) {}
 
   ngOnInit() {
     this.getPosts();
     this.primengConfig.ripple = true;
+    this.initializeMenuItem();
+  }
+
+  initializeMenuItem() {
     this.items = [
       {
         label: this.translateService.instant('options'),
@@ -74,49 +76,38 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  createPost(event: PostEntity<UserModel>) {
+  handlePost(event: PostEntity<UserModel>) {
     console.log(event);
     if (!this.openEdit) {
-      this.posts.unshift(event);
-      this.postService
-        .savePost({
-          imageUrl: event.imageUrl,
-          description: event.description,
-          noComment: false,
-        })
-        .subscribe();
+      this.createPost(event);
     } else {
-      // this.editPost(event);
-      this.selectedPost = {
-        id: 1,
-        imageUrl: event.imageUrl,
-        description: event.description,
-        noComment: false,
-        comments: [],
-        user: this.currentUser,
-        votes: [],
-      };
+      this.editPost(event);
     }
   }
 
+  createPost(event: PostEntity<UserModel>) {
+    this.posts.unshift(event);
+    this.postService
+      .savePost({
+        imageUrl: event.imageUrl,
+        description: event.description,
+        noComment: event.noComment,
+      })
+      .subscribe();
+  }
+
   editPost(event: PostEntity<UserModel>) {
-    // this.selectedPost = event;
-    // this.openModal = true;
-    // this.openEdit = true;
-    // const index = this.posts.indexOf(this.selectedPost);
-    //   this.posts.map((item, indx) => {
-    //     console.log(index);
-    //     if (index === indx) {
-    //       this.posts[index] = event;
-    //     }
-    //   });
-    //   this.openEdit = false;
-    // this.selectedPost.description = event.description;
-    // this.selectedPost.noComment = event.noComment;
-    // this.selectedPost.imageUrl = event.imageUrl;
-    // this.postService.editPost(this.selectedPost);
-    // createPostForm.reset();
-    // this.openModal.emit(false);
+    const index = this.posts.indexOf(this.selectedPost);
+    this.posts.map((item, indx) => {
+      console.log(index);
+      if (index === indx) {
+        this.posts[index] = event;
+      }
+    });
+    this.selectedPost.description = event.description;
+    this.selectedPost.imageUrl = event.imageUrl;
+    this.postService.editPost(this.selectedPost);
+    this.openEdit = false;
   }
 
   deletePost(post: PostEntity<UserModel>) {
@@ -142,7 +133,7 @@ export class HomeComponent implements OnInit {
 
   confirm() {
     this.confirmationService.confirm({
-      key: 'myDialog',
+      key: 'homeKey',
       message: this.translateService.instant('deletePostMessage'),
       accept: () => {
         this.deletePost(this.selectedPost);

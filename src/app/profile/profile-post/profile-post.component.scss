@@ -1,10 +1,10 @@
 img {
   width: 350px;
+  object-fit: cover;
 }
 
 .wrapper {
   display: flex;
-  // justify-content: center;
 }
 
 .header {

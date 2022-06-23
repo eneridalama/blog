@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ResponseModel } from '../core/model/auth.model';
-import { PageOf, PostEntity } from '../core/model/post.model';
+import { PageOf, PostClass, PostEntity } from '../core/model/post.model';
 import { UserModel } from '../core/model/user.model';
 import { PostService } from '../core/services/post.service';
 
@@ -14,22 +14,7 @@ export class ProfileComponent implements OnInit {
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   posts: PostEntity<UserModel>[] = [];
   display: boolean = false;
-  selectedPost: PostEntity<UserModel> = {
-    id: 0,
-    imageUrl: '',
-    description: '',
-    noComment: false,
-    comments: [],
-    user: {
-      id: 1,
-      firstName: '',
-      lastName: '',
-      email: '',
-      token: '',
-      role: '',
-    },
-    votes: [],
-  };
+  selectedPost: PostEntity<UserModel> = new PostClass;
 
   constructor(private postService: PostService) { }
 

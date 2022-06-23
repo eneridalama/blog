@@ -13,12 +13,12 @@ const appRouts: Routes = [
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 
   { path: 'login', component: LoginComponent },
@@ -28,7 +28,7 @@ const appRouts: Routes = [
   {
     path: 'dashboard',
     component: AdminDashboardComponent,
-    canActivate: [isAdminGuard]
+    canActivate: [isAdminGuard],
   },
 
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

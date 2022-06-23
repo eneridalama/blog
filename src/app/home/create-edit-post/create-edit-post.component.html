@@ -1,10 +1,16 @@
+<div class="d-flex align-items-center header">
+    <img src="/assets/images/profile-pic.png" alt="" class="profile-pic">
+    <span>
+        {{currentUser.firstName}} {{currentUser.lastName}}
+    </span>
+</div>
 <form [formGroup]="createPostForm">
     <textarea placeholder="{{'ex' | translate}}" width="400px" formControlName="description"></textarea> <br>
     <input pInputText placeholder="{{'putImageUrl' | translate}}" style="width: 100%;" formControlName="imageUrl">
 
     <div class="d-flex justify-content-between" style="margin-top: 20px;">
         <p>{{'turnOffCommenting' | translate}}</p>
-        <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
+        <p-inputSwitch (onChange)="handleChange($event)" ></p-inputSwitch>
     </div>
     <div class="d-flex justify-content-end">
         <button pButton type="submit" (click)="addPost()" label="{{'post' | translate}}" [disabled]="createPostForm.invalid"></button>

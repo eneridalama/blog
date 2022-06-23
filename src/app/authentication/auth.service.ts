@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SocialAuthService } from '@abacritt/angularx-social-login';
 import {
   AuthModel,
   ResponseModel,
