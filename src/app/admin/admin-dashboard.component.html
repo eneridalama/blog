@@ -4,11 +4,11 @@
 <div class="container" *ngIf="!isLoading">
     <p-card>
         <div class="log-out">
-            <p>{{"hello" | translate}} {{currentUser.firstName}}, {{"admin" | translate}} </p>
+            <p>{{"adminMessage" | translate}}</p>
             <p-selectButton [options]="lang" [(ngModel)]="selected" optionLabel="value" optionValue="name"
                 (onChange)="selectLanguage($event)"></p-selectButton>
             <button pButton class="p-button-outlined p-button-primary" label="{{'logout' | translate}}"
-                (click)="logout()"></button>
+                (click)="authService.logout()"></button>
         </div>
         <p-table #dt [value]="posts" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="4"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[4]" [paginator]="true"
@@ -20,16 +20,19 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="name">ID
+                    <th pSortableColumn="id">ID
                     </th>
-                    <th pSortableColumn="country.name">
+                    <th pSortableColumn="user">
                         {{'user' | translate}}
                     </th>
-                    <th pSortableColumn="representative.name">
+                    <th pSortableColumn="image">
                         {{'image' | translate}}
                     </th>
-                    <th pSortableColumn="date">
+                    <th pSortableColumn="description">
                         {{'description' | translate}}
+                    </th>
+                    <th pSortableColumn="delete">
+                        {{'delete' | translate}}
                     </th>
                 </tr>
             </ng-template>

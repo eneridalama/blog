@@ -1,16 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CommentEntity } from 'src/app/core/model/comment.model';
-import { PostEntity } from 'src/app/core/model/post.model';
-import { UserModel } from 'src/app/core/model/user.model';
+import { CommentEntity, CommentEntityClass } from 'src/app/core/model/comment.model';
+import { PostClass, PostEntity } from 'src/app/core/model/post.model';
+import { UserModel, UserModelClass } from 'src/app/core/model/user.model';
 import { CommentService } from 'src/app/core/services/comment.service';
 
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
-  styleUrls: ['./comment-section.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  styleUrls: ['./comment-section.component.scss']
 })
 export class CommentSectionComponent implements OnInit {
   comments: CommentEntity[] = [];
@@ -21,38 +20,10 @@ export class CommentSectionComponent implements OnInit {
   selectedComment: CommentEntity;
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
 
-  @Input() post: PostEntity<UserModel> = {
-    id: 1,
-    imageUrl: '',
-    description: '',
-    noComment: false,
-    comments: [],
-    user: {
-      id: 1,
-      firstName: '',
-      lastName: '',
-      email: '',
-      token: '',
-      role: '',
-    },
-    votes: [],
-  };
+  @Input() post: PostEntity<UserModel> = new PostClass;
 
-  user: UserModel = {
-    id: 0,
-    firstName: '',
-    lastName: '',
-    email: '',
-    token: '',
-    role: '',
-  };
-
-  comment: CommentEntity = {
-    id: 1,
-    comment: '',
-    user: this.user,
-    post: this.post,
-  };
+  user: UserModel = new UserModelClass;
+  comment: CommentEntity = new CommentEntityClass;
 
   @ViewChild('commentRef') commentControl!: ElementRef<HTMLInputElement>;
 
@@ -83,9 +54,7 @@ export class CommentSectionComponent implements OnInit {
 
   viewComments() {
     this.view = !this.view;
-    this.view
-      ? (this.message = this.translateService.instant('hide'))
-      : this.translateService.instant('view');
+    
   }
 
   deleteComment(comment: CommentEntity) {

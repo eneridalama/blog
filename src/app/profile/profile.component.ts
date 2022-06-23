@@ -11,7 +11,7 @@ import { PostService } from '../core/services/post.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: UserModel = JSON.parse(localStorage.getItem('user')!);
+  currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   posts: PostEntity<UserModel>[] = [];
   display: boolean = false;
   selectedPost: PostEntity<UserModel> = {
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
     this.postService
       .getPost()
       .subscribe((res: ResponseModel<PageOf<PostEntity<UserModel>[]>>) => {
-        this.posts = res.data && res.data.list.filter(item => item.user.id === this.user.id);
+        this.posts = res.data && res.data.list.filter(item => item.user.id === this.currentUser.id);
         console.log('res1 ',res.data);
       });
   }
@@ -51,6 +51,4 @@ export class ProfileComponent implements OnInit {
     this.selectedPost = post;
     console.log(this.selectedPost);
   }
-
-
 }

@@ -5,8 +5,6 @@ import { LoginComponent } from './authentication/login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AuthGuard } from './authentication/auth.guard';
-import { EditPostComponent } from './home/edit-post/edit-post.component';
-import { UnsavedGuard } from './shared/guards/unsaved.guard';
 import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { isAdminGuard } from './authentication/is-admin.guard';
@@ -30,10 +28,10 @@ const appRouts: Routes = [
   {
     path: 'dashboard',
     component: AdminDashboardComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [isAdminGuard]
   },
 
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard,] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 ];
 

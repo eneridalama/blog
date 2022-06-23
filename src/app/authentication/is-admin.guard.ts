@@ -8,7 +8,6 @@ export class isAdminGuard implements CanActivate {
 
   canActivate(): boolean {
     if(this.authService.loggedIn() && this.authService.isAdmin()){
-     this.router.navigate(['/dashboard']);
       return true;
     } else {
      this.router.navigate(['/home']);

@@ -7,12 +7,13 @@ import {
   PrimeNGConfig,
 } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { AuthService } from '../authentication/auth.service';
 import { ResponseModel } from '../core/model/auth.model';
 import { PageOf, PostEntity } from '../core/model/post.model';
 import { UserModel } from '../core/model/user.model';
 import { PostService } from '../core/services/post.service';
 
-interface Language{
+interface Language {
   name: string;
   value: string;
 }
@@ -20,13 +21,13 @@ interface Language{
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  providers: [],
 })
 export class AdminDashboardComponent implements OnInit {
   isLoading: boolean = false;
   posts: PostEntity<UserModel>[] = [];
-  currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
-  lang: Language[] = [{ name: '', value: ''}];
+  // currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
+  lang: Language[] = [{ name: '', value: '' }];
   selected: string = 'en';
 
   constructor(
@@ -35,13 +36,13 @@ export class AdminDashboardComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.getPosts();
     this.primengConfig.ripple = true;
-
     this.lang = [
       { name: 'en', value: 'EN' },
       { name: 'al', value: 'AL' },
@@ -60,6 +61,7 @@ export class AdminDashboardComponent implements OnInit {
   deletePost(post: PostEntity<UserModel>) {
     this.postService.deletePost(post.id).subscribe((item) => {
       this.posts = this.posts.filter((item) => item.id != post.id);
+      this.deleteMessage();
     });
   }
 
@@ -73,7 +75,6 @@ export class AdminDashboardComponent implements OnInit {
       message: this.translateService.instant('deletePostMessage'),
       accept: () => {
         this.deletePost(post);
-        this.deleteMessage();
       },
     });
   }
@@ -85,11 +86,5 @@ export class AdminDashboardComponent implements OnInit {
       summary: this.translateService.instant('deleted'),
       detail: this.translateService.instant('deletedDetail'),
     });
-  }
-
-  logout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
   }
 }

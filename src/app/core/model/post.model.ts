@@ -1,4 +1,5 @@
 import { CommentEntity } from './comment.model';
+import { UserModel } from './user.model';
 import { VoteEntity } from './vote.model';
 
 export interface CreatePost {
@@ -26,4 +27,21 @@ export interface PostEntity<MODEL> {
 
 export interface OnEdit {
   isDirty: boolean;
+}
+
+export class PostClass implements PostEntity<UserModel> {
+  id = 1;
+  imageUrl = '';
+  description = '';
+  noComment = false;
+  comments = [];
+  user = {
+    id: 1,
+    firstName: '',
+    lastName: '',
+    email: '',
+    token: '',
+    role: '',
+  };
+  votes = [];
 }

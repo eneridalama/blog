@@ -9,6 +9,7 @@ import {
   SignUpModel,
 } from '../core/model/auth.model';
 import { UserModel } from '../core/model/user.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class AuthService {
   private url: string;
   user: Subject<UserModel> = new Subject();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+    private router: Router) {
     this.url = environment.baseUrl + '/auth';
   }
 
@@ -37,11 +39,24 @@ export class AuthService {
       .pipe(tap((res) => localStorage.setItem('token', res.data.token)));
   }
 
-  loggedIn(): boolean{
+  loggedIn(): boolean {
     return !!localStorage.getItem('user');
   }
 
-  isAdmin(){
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+  loggedUser() {
+    if(this.loggedIn()){
+      return localStorage.getItem('user') as any;
+    }
+    return null;
+  }
+
+  isAdmin() {
     return JSON.parse(localStorage.getItem('user')!).role == '9';
   }
 }

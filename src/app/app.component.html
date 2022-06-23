@@ -1,2 +1,2 @@
-<app-menu *ngIf="authService.loggedIn()"></app-menu>
+<app-menu *ngIf="authService.loggedIn() && !authService.isAdmin()"></app-menu>
 <router-outlet></router-outlet>

@@ -1,5 +1,5 @@
-import { PostEntity } from './post.model';
-import { UserModel } from './user.model';
+import { PostClass, PostEntity } from './post.model';
+import { UserModel, UserModelClass } from './user.model';
 
 export interface CommentEntity {
   id: number;
@@ -15,4 +15,11 @@ export interface CreateComment {
 
 export interface OmitType {
   comment: string;
+}
+
+export class CommentEntityClass implements CommentEntity {
+  id = 1;
+  comment = '';
+  user!: UserModelClass;
+  post!: PostClass;
 }

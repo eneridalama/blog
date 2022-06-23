@@ -13,12 +13,12 @@ import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-profile-post',
   templateUrl: './profile-post.component.html',
-  styleUrls: ['./profile-post.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  styleUrls: ['./profile-post.component.scss']
 })
 export class ProfilePostComponent implements OnInit {
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   posts: PostEntity<UserModel>[] = []
+  openEdit: boolean = false;
   @Input() post: PostEntity<UserModel> = {
     id: 0,
     imageUrl: '',
@@ -60,6 +60,7 @@ export class ProfilePostComponent implements OnInit {
             command: () => {
               if (this.post) {
                 this.display = true;
+                this.openEdit = true
               }
             },
           },
@@ -81,7 +82,7 @@ export class ProfilePostComponent implements OnInit {
       .getPost()
       .subscribe((res: ResponseModel<PageOf<PostEntity<UserModel>[]>>) => {
         this.posts = res.data && res.data.list;
-        console.log('res1 ',res.data);
+        console.log('res1 ', res.data);
       });
   }
 

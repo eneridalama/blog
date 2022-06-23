@@ -6,3 +6,12 @@ export interface UserModel {
   token: string;
   role: string;
 }
+
+export class UserModelClass implements UserModel {
+  id = 0;
+  firstName = '';
+  lastName = '';
+  email = '';
+  token = '';
+  role = '';
+}
