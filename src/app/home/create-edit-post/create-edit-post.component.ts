@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostClass, PostEntity } from 'src/app/core/model/post.model';
 import { UserModel } from 'src/app/core/model/user.model';
@@ -20,22 +20,27 @@ export class CreateEditPostComponent implements OnInit {
     console.log('item ', item)
     setTimeout(() => {
       if (item !== undefined) {
+        console.log('item undefiend ', item)
         this.createPostForm = this.initializeForm(item);
+        console.log('forma ', this.createPostForm);
+        
       }
     });
   }
 
-  
+  @ViewChild('contentRef') contentControl!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('imageRef') imageControl!: ElementRef<HTMLInputElement>;
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.createPostForm = this.initializeForm(this.object);
+    this.createPostForm = this.initializeForm(null);
   }
 
   initializeForm(value: any): FormGroup {
     return this.formBuilder.group({
-      description: new FormControl(value?.title, Validators.required),
-      imageUrl: new FormControl(value?.image, Validators.required),
+      description: new FormControl(value?.description, Validators.required),
+      imageUrl: new FormControl(value?.imageUrl, Validators.required),
     });
     
   }
