@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PostEntity } from 'src/app/core/model/post.model';
+import { PostClass, PostEntity } from 'src/app/core/model/post.model';
 import { UserModel } from 'src/app/core/model/user.model';
 
 @Component({
@@ -14,8 +14,10 @@ export class CreateEditPostComponent implements OnInit {
   createPostForm: FormGroup = new FormGroup({});
   @Output() addedPost = new EventEmitter<PostEntity<UserModel>>();
   @Output() openModal = new EventEmitter<boolean>();
-  @Input()
+  editForm: PostEntity<UserModel> = new PostClass;
+  @Input() 
   set object(item: any) {
+    console.log('item ', item)
     setTimeout(() => {
       if (item !== undefined) {
         this.createPostForm = this.initializeForm(item);
@@ -23,10 +25,11 @@ export class CreateEditPostComponent implements OnInit {
     });
   }
 
+  
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.createPostForm = this.initializeForm(null);
+    this.createPostForm = this.initializeForm(this.object);
   }
 
   initializeForm(value: any): FormGroup {
@@ -34,6 +37,7 @@ export class CreateEditPostComponent implements OnInit {
       description: new FormControl(value?.title, Validators.required),
       imageUrl: new FormControl(value?.image, Validators.required),
     });
+    
   }
 
   addPost() {

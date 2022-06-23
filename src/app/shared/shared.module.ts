@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { SortPostsPipe } from './pipes/sort-posts.pipe';
 
+
+
+
 const comp = [TabViewModule]
 
 @NgModule({

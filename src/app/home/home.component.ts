@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   openEdit: boolean = false;
   openModal: boolean = false;
   items: MenuItem[] = [];
-  selectedPost: PostEntity<UserModel> = new PostClass;
+  selectedPost: PostEntity<UserModel> = new PostClass();
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
 
   constructor(
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
             icon: 'pi pi-pencil',
             command: () => {
               if (this.selectedPost) {
-                console.log(this.selectedPost)
+                console.log(this.selectedPost);
                 this.openEdit = true;
                 this.openModal = true;
               }
@@ -78,28 +78,39 @@ export class HomeComponent implements OnInit {
     console.log(event);
     if (!this.openEdit) {
       this.posts.unshift(event);
-      this.postService.savePost({
+      this.postService
+        .savePost({
+          imageUrl: event.imageUrl,
+          description: event.description,
+          noComment: false,
+        })
+        .subscribe();
+    } else {
+      // this.editPost(event);
+      this.selectedPost = {
+        id: 1,
         imageUrl: event.imageUrl,
         description: event.description,
         noComment: false,
-      }).subscribe();
-    } else {
-      this.editPost(event);
+        comments: [],
+        user: this.currentUser,
+        votes: [],
+      };
     }
   }
 
   editPost(event: PostEntity<UserModel>) {
-    this.selectedPost = event;
-    this.openModal = true;
-    this.openEdit = true;
-    const index = this.posts.indexOf(this.selectedPost);
-      this.posts.map((item, indx) => {
-        console.log(index);
-        if (index === indx) {
-          this.posts[index] = event;
-        }
-      });
-      this.openEdit = false;
+    // this.selectedPost = event;
+    // this.openModal = true;
+    // this.openEdit = true;
+    // const index = this.posts.indexOf(this.selectedPost);
+    //   this.posts.map((item, indx) => {
+    //     console.log(index);
+    //     if (index === indx) {
+    //       this.posts[index] = event;
+    //     }
+    //   });
+    //   this.openEdit = false;
     // this.selectedPost.description = event.description;
     // this.selectedPost.noComment = event.noComment;
     // this.selectedPost.imageUrl = event.imageUrl;
