@@ -1,28 +1,43 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { PostEntity } from 'src/app/core/model/post.model';
 import { UserModel } from 'src/app/core/model/user.model';
 
 @Component({
   selector: 'app-create-edit-post',
   templateUrl: './create-edit-post.component.html',
-  styleUrls: ['./create-edit-post.component.scss']
+  styleUrls: ['./create-edit-post.component.scss'],
 })
 export class CreateEditPostComponent implements OnInit {
-
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
   createPostForm: FormGroup = new FormGroup({});
   isOff: boolean = false;
-  
+
   @Output() addedPost = new EventEmitter<PostEntity<UserModel>>();
   @Output() openModal = new EventEmitter<boolean>();
-  @Input() 
+  @Input() openEdit: boolean = false;
+  @Input()
   set object(item: any) {
-    setTimeout(() => {
-      if (item !== undefined) {
-        this.createPostForm = this.initializeForm(item);
-      }
-    });
+    if (this.openEdit) {
+      setTimeout(() => {
+        if (item !== undefined) {
+          this.createPostForm = this.initializeForm(item);
+        }
+      });
+    }
   }
 
   constructor(private formBuilder: FormBuilder) {}
@@ -33,7 +48,7 @@ export class CreateEditPostComponent implements OnInit {
 
   initializeForm(value: any): FormGroup {
     return this.formBuilder.group({
-      description: new FormControl(value?.description, Validators.required),
+      description: new FormControl(value?.description, [Validators.required, Validators.minLength(3)]),
       imageUrl: new FormControl(value?.imageUrl, Validators.required),
     });
   }
@@ -41,13 +56,14 @@ export class CreateEditPostComponent implements OnInit {
   addPost() {
     this.addedPost.emit({
       id: 0,
-        imageUrl: this.createPostForm.value.imageUrl,
-        description: this.createPostForm.value.description,
-        noComment: this.isOff,
-        comments: [],
-        user: this.currentUser,
-        votes: [],
+      imageUrl: this.createPostForm.value.imageUrl,
+      description: this.createPostForm.value.description,
+      noComment: this.isOff,
+      comments: [],
+      user: this.currentUser,
+      votes: [],
     });
+    this.createPostForm.reset();
     this.openModal.emit(false);
   }
 

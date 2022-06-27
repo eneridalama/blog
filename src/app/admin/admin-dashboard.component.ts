@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   ConfirmationService,
@@ -34,7 +33,6 @@ export class AdminDashboardComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router,
     private translateService: TranslateService,
     public authService: AuthService
   ) {}

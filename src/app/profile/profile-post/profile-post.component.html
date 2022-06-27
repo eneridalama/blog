@@ -42,8 +42,8 @@
 
 </div>
 <p-confirmDialog header="{{'confirmation' | translate}}" icon="pi pi-exclamation-triangle" key="profilePost"></p-confirmDialog>
-<p-toast key="deleteToast" position="top-right"></p-toast>
-<p-dialog header="Edit post" [(visible)]="display" [modal]="true" [appendTo]="'body'">
-    <app-create-edit-post (addedPost)="editPost($event)" (openModal)="showModal($event)" [object]="post">
+
+<p-dialog header="{{'editPost' | translate}}" [(visible)]="display" [modal]="true" [appendTo]="'body'">
+    <app-create-edit-post (addedPost)="editPost($event)" [openEdit]="openEdit" (openModal)="showModal($event)" [object]="post">
     </app-create-edit-post>
 </p-dialog>

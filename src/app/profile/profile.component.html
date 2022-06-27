@@ -21,7 +21,7 @@
     </div>
 
 </div>
-
+<p-toast key="deleteToast" position="top-right"></p-toast>
 <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '60vw'}">
-    <app-profile-post [post]="selectedPost"></app-profile-post>
+    <app-profile-post [post]="selectedPost" (openModal)="showModal($event)"></app-profile-post>
 </p-dialog>

@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
             icon: 'pi pi-pencil',
             command: () => {
               if (this.selectedPost) {
-                console.log(this.selectedPost);
                 this.openEdit = true;
                 this.openModal = true;
               }
@@ -99,13 +98,13 @@ export class HomeComponent implements OnInit {
   editPost(event: PostEntity<UserModel>) {
     const index = this.posts.indexOf(this.selectedPost);
     this.posts.map((item, indx) => {
-      console.log(index);
       if (index === indx) {
         this.posts[index] = event;
       }
     });
     this.selectedPost.description = event.description;
     this.selectedPost.imageUrl = event.imageUrl;
+    this.selectedPost.noComment = event.noComment;
     this.postService.editPost(this.selectedPost);
     this.openEdit = false;
   }

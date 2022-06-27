@@ -23,5 +23,5 @@
         <button pButton label="{{'post' | translate}}" class="p-button-outlined" (click)="postComment()"></button>
     </div>
 </div>
-<p-confirmDialog header="{{'confirmation' | translate}}" key="commentKey" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-toast key="deleteToast" position="top-right"></p-toast>
+<p-confirmDialog header="{{'confirmation' | translate}}" key="commentKey" appendTo="body" icon="pi pi-exclamation-triangle"></p-confirmDialog>

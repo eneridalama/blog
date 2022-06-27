@@ -49,10 +49,7 @@ export class SignupComponent implements OnInit {
         },
         (error) => {
           this.isLoading = false;
-          switch(error.error.errno){
-              case 1062:
-                this.showError('Email has already been taken');
-          }
+          this.showError('Email has already been taken');
         }
       );
     this.signupForm.reset();

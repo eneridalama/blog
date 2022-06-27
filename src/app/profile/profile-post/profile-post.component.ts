@@ -14,13 +14,14 @@ import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-profile-post',
   templateUrl: './profile-post.component.html',
-  styleUrls: ['./profile-post.component.scss']
+  styleUrls: ['./profile-post.component.scss'],
 })
 export class ProfilePostComponent implements OnInit {
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
-  posts: PostEntity<UserModel>[] = []
+  posts: PostEntity<UserModel>[] = [];
   openEdit: boolean = false;
-  @Input() post: PostEntity<UserModel> = new PostClass;
+  @Input() post: PostEntity<UserModel> = new PostClass();
+  @Output() openModal = new EventEmitter<boolean>();
 
   items: MenuItem[] = [];
   display: boolean = false;
@@ -40,7 +41,7 @@ export class ProfilePostComponent implements OnInit {
     this.initializeMenuItems();
   }
 
-  initializeMenuItems(){
+  initializeMenuItems() {
     this.items = [
       {
         label: this.translateService.instant('options'),
@@ -51,7 +52,7 @@ export class ProfilePostComponent implements OnInit {
             command: () => {
               if (this.post) {
                 this.display = true;
-                this.openEdit = true
+                this.openEdit = true;
               }
             },
           },
@@ -99,30 +100,31 @@ export class ProfilePostComponent implements OnInit {
       message: this.translateService.instant('deletePostMessage'),
       accept: () => {
         this.deletePost(this.post);
-        this.deleteMessage();
       },
-      key: "profilePost"
+      key: 'profilePost',
     });
     this.display = false;
   }
 
   deletePost(post: PostEntity<UserModel>) {
-    this.postService.deletePost(post.id).subscribe((item) => {
-      this.posts = this.posts.filter((item) => item.id != post.id);
-    });
+    if (post.id) {
+      this.postService.deletePost(post.id).subscribe((item) => {
+        this.posts = this.posts.filter((item) => item.id != post.id);
+        this.display = false;
+      });
+    } else {
+      const index = this.posts.indexOf(this.post);
+      this.posts.map((item, indx) => {
+        if (index === indx) {
+          this.posts = this.posts.filter((item) => item.id != post.id);
+        }
+      });
+    }
     this.display = false;
+    this.openModal.emit(false);
   }
 
-  deleteMessage() {
-    this.messageService.add({
-      key: 'deleteToast',
-      severity: 'success',
-      summary: this.translateService.instant('deleted'),
-      detail: this.translateService.instant('deletedDetail'),
-    });
-  }
-
-  showModal(event: boolean){
+  showModal(event: boolean) {
     this.display = event;
   }
 }

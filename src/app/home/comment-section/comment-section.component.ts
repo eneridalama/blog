@@ -1,7 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CommentEntity, CommentEntityClass } from 'src/app/core/model/comment.model';
+import {
+  CommentEntity,
+  CommentEntityClass,
+} from 'src/app/core/model/comment.model';
 import { PostClass, PostEntity } from 'src/app/core/model/post.model';
 import { UserModel, UserModelClass } from 'src/app/core/model/user.model';
 import { CommentService } from 'src/app/core/services/comment.service';
@@ -9,7 +12,7 @@ import { CommentService } from 'src/app/core/services/comment.service';
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
-  styleUrls: ['./comment-section.component.scss']
+  styleUrls: ['./comment-section.component.scss'],
 })
 export class CommentSectionComponent implements OnInit {
   comments: CommentEntity[] = [];
@@ -18,10 +21,10 @@ export class CommentSectionComponent implements OnInit {
   selectedComment: CommentEntity;
   currentUser: UserModel = JSON.parse(localStorage.getItem('user')!);
 
-  @Input() post: PostEntity<UserModel> = new PostClass;
+  @Input() post: PostEntity<UserModel> = new PostClass();
 
-  user: UserModel = new UserModelClass;
-  comment: CommentEntity = new CommentEntityClass;
+  user: UserModel = new UserModelClass();
+  comment: CommentEntity = new CommentEntityClass();
 
   @ViewChild('commentRef') commentControl!: ElementRef<HTMLInputElement>;
 
@@ -65,13 +68,19 @@ export class CommentSectionComponent implements OnInit {
   }
 
   confirm(comment: CommentEntity) {
-    this.confirmationService.confirm({
-      key: 'commentKey',
-      message: this.translateService.instant('deleteCommentMessage'),
-      accept: () => {
-        this.deleteComment(comment);
-      },
-    });
+    if (this.selectedComment) {
+      this.confirmationService.confirm({
+        key: 'commentKey',
+        message: this.translateService.instant('deleteCommentMessage'),
+        accept: () => {
+          this.deleteComment(comment);
+          this.confirmationService.close();
+        },
+        reject: () => {
+          this.confirmationService.close();
+        },
+      });
+    }
   }
 
   deleteMessage() {

@@ -60,9 +60,9 @@ const comp = [
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, comp],
-  exports: [CommonModule, comp],
+  declarations: [SortPostsPipe],
+  imports: [CommonModule, comp, ],
+  exports: [CommonModule, comp, SortPostsPipe],
   providers: [SortPostsPipe],
 })
 export class SharedModule {}

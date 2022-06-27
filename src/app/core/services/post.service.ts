@@ -25,7 +25,7 @@ export class PostService {
       .get<ResponseModel<PageOf<PostEntity<UserModel>[]>>>(this.url)
       .pipe(
         tap((resp) => {
-          this.sortPostsPipe.transform(resp.data.list);
+          // this.sortPostsPipe.transform(resp.data.list);
         })
       );
   }
